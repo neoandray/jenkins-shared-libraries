@@ -16,7 +16,7 @@ def call(String  vmName, int vmCount, ArrayList physicalHosts){
         )
       }
 
-     return  input(id:'vmHostMapInput', parameters:  vmHostParameters, description: 'Please choose the physical hosts for your servers')
+     return  input(id:'vmHostMapInput', parameters:  vmHostMapParameters, description: 'Please choose the physical hosts for your servers')
 
 
 }
