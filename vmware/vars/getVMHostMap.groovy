@@ -11,7 +11,7 @@ def call(String  vmName, int vmCount, ArrayList physicalHosts){
                     def serverName = indexNatural <9 ?"${vmName}00${indexNatural}":"${vmName}0${indexNatural}"
 
         vmHostMapParameters.add(
-          choice(name:"${vmID}", choices:phyHosts  ,description:"Please choose a physical host for ${serverName}")
+          choice(name:"${vmID}", choices:physicalHosts  ,description:"Please choose a physical host for ${serverName}")
 
         )
       }
