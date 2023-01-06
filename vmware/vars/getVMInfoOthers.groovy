@@ -8,10 +8,12 @@ def call (String server, String username, String password){
 \$vmInfo["hostNetworkMap"] =get-vmhost|foreach{\$vmhost= \$_;\$vmhost|get-virtualportGroup | select  @{n='HostName';e={\$vmhost.Name}}, @{n='NetworkName';e={\$_.Name}} } ; 
 \$vmInfo |convertto-json"""
           
-          def  rawTemplateString = ""
-          def vCenterDetails     = [server: server, username:username, password:password, command: command]
+        def  rawTemplateString = ""
+        println(server)
+        println(username)
+        println(password)
         def response = null
-        response =  pwsh( script:"""connect-viserver -server ${vCenterDetails.server} -user ${vCenterDetails.username} -password ${vCenterDetails.password};  ${vCenterDetails.command}""", encoding: 'UTF-8',returnStdout:true)  
+        response =  pwsh( script:"""connect-viserver -server ${server} -user ${username} -password ${password};  ${command}""", encoding: 'UTF-8',returnStdout:true)  
         def  userStringReplacement = ""
         if ("vsphere.local" in vCenterDetails.username.toLowerCase()){
              userStringReplacement ="VSPHERE.LOCAL\\"+vCenterDetails.username.split('@')[0]
