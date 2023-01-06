@@ -15,14 +15,14 @@ def call (String server, String username, String password){
         def response = null
         response =  pwsh( script:"""connect-viserver -server ${server} -user ${username} -password ${password};  ${command}""", encoding: 'UTF-8',returnStdout:true)  
         def  userStringReplacement = ""
-        if ("vsphere.local" in vCenterDetails.username.toLowerCase()){
-             userStringReplacement ="VSPHERE.LOCAL\\"+vCenterDetails.username.split('@')[0]
+        if ("vsphere.local" in username.toLowerCase()){
+             userStringReplacement ="VSPHERE.LOCAL\\"+username.split('@')[0]
           }else{
-            userStringReplacement = vCenterDetails.username
+            userStringReplacement = username
           }
           def processedResponse= response.replace("""Name                           Port  User
           ----                           ----  ----
-          ${vCenterDetails.server}       443   ${userStringReplacement}""",'').trim()
+          ${server}       443   ${userStringReplacement}""",'').trim()
           rawTemplateString =  processedResponse
           def vmInfo = readJSON text : rawTemplateString
           return vmInfo
