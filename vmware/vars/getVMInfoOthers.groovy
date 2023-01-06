@@ -8,7 +8,6 @@ def call (String server, String username, String password){
 \$vmInfo["hostNetworkMap"] =get-vmhost|foreach{\$vmhost= \$_;\$vmhost|get-virtualportGroup | select  @{n='HostName';e={\$vmhost.Name}}, @{n='NetworkName';e={\$_.Name}} } ; 
 \$vmInfo |convertto-json"""
           
-        def  rawTemplateString = ""
 
         def response = null
         response =  pwsh( script:"""connect-viserver -server ${server} -user ${username} -password ${password};  ${command}""", encoding: 'UTF-8',returnStdout:true)  
@@ -18,12 +17,9 @@ def call (String server, String username, String password){
           }else{
             userStringReplacement = username
           }
-          def processedResponse= response.replace("""Name                           Port  User
-          ----                           ----  ----
-          ${server}       443   ${userStringReplacement}""",'').trim()
-          rawTemplateString =  processedResponse
-          println(rawTemplateString)
-          def vmInfo = readJSON text : rawTemplateString
+          def jsonStart  = response.indexOf('{')
+          def jsonString = response.substring(jsonStart) 
+          def vmInfo     = readJSON text : jsonString
           return vmInfo
 }
 
