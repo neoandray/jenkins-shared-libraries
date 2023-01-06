@@ -20,8 +20,14 @@ def runCliCommand(HashMap vCenterDetails){
     
         def response = null
         response =  pwsh( script:"""connect-viserver -server ${vCenterDetails.server} -user ${vCenterDetails.username} -password ${vCenterDetails.password};  ${vCenterDetails.command}""", encoding: 'UTF-8',returnStdout:true)  
+        def  userStringReplacement = ""
+        if ("vsphere.local" in vCenterDetails.username.toLowerCase()){
+            userStringReplacement ="VSPHERE.LOCAL\\"+vCenterDetails.username.split('@')[0]
+        }else{
+           userStringReplacement = vCenterDetails.username
+        }
         def processedResponse= response.replace("""Name                           Port  User
 ----                           ----  ----
-${vCenterDetails.server}       443   ${vCenterDetails.username}""",'').trim()
+${vCenterDetails.server}       443   ${userStringReplacement}""",'').trim()
         return processedResponse
 }
