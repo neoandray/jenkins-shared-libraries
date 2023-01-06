@@ -9,9 +9,7 @@ def call (String server, String username, String password){
 \$vmInfo |convertto-json"""
           
         def  rawTemplateString = ""
-        println(server)
-        println(username)
-        println(password)
+
         def response = null
         response =  pwsh( script:"""connect-viserver -server ${server} -user ${username} -password ${password};  ${command}""", encoding: 'UTF-8',returnStdout:true)  
         def  userStringReplacement = ""
@@ -24,6 +22,7 @@ def call (String server, String username, String password){
           ----                           ----  ----
           ${server}       443   ${userStringReplacement}""",'').trim()
           rawTemplateString =  processedResponse
+          println(rawTemplateString)
           def vmInfo = readJSON text : rawTemplateString
           return vmInfo
 }
