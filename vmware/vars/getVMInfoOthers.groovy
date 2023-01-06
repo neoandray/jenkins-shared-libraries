@@ -8,7 +8,7 @@ def call (String server, String username, String password){
 \$vmInfo["hostNetworkMap"] =get-vmhost|foreach{\$vmhost= \$_;\$vmhost|get-virtualportGroup | select  @{n='HostName';e={\$vmhost.Name}}, @{n='NetworkName';e={\$_.Name}} } ; 
 \$vmInfo |convertto-json"""
           
-          String rawTemplateString = runCliCommand({server: server, username:username, password:password, command: command})
+          String rawTemplateString = runCliCommand([server: server, username:username, password:password, command: command])
           def vmInfo = readJSON text : rawTemplateString
           return vmInfo
 }
