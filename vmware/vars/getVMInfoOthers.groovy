@@ -19,9 +19,9 @@ def call (String server, String username, String password){
           }
           def jsonStart  = response.indexOf('{')
           if (jsonStart){ 
-           def jsonString = response.substring(jsonStart) 
-           return readJSON text : jsonString
-          
+            def jsonString = response.substring(jsonStart) 
+            def vmInfo     = readJSON text : jsonString
+            return vmInfo
             }else{
                 return null
             }
