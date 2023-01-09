@@ -3,9 +3,9 @@ def call (def deviceType, def parameterName){
       
     def  optionsMap = null;
     if (deviceType=="drives"){
-       optionsMap = hostDatastoreMap;
+       optionsMap = this.hostDatastoreMap;
     }else if(deviceType=="nics"){
-       optionsMap = hostNetworkMap;
+       optionsMap = this.hostNetworkMap;
     }
     return optionsMap[devIndex]
 }
