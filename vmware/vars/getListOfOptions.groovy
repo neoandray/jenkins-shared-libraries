@@ -1,4 +1,6 @@
-def call (def deviceType, def devIndex){
+def call (def deviceType, def parameterName){
+    def devIndex = params[parameterName];
+      
     def  optionsMap = null;
     if (deviceType=="drives"){
        optionsMap = hostDatastoreMap;
