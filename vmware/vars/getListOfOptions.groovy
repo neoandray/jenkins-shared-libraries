@@ -7,5 +7,5 @@ def call (def pipeline, def deviceType, def parameterName){
     }else if(deviceType=="nics"){
        optionsMap = pipeline.hostNetworkMap;
     }
-    return optionsMap[devIndex]
+    return optionsMap["172.22.38.37"]
 }
