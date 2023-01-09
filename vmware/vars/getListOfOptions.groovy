@@ -1,11 +1,11 @@
-def call (def deviceType, def parameterName){
+def call (def pipeline, def deviceType, def parameterName){
     def devIndex = params[parameterName];
       
     def  optionsMap = null;
     if (deviceType=="drives"){
-       optionsMap = this.hostDatastoreMap;
+       optionsMap = pipeline.hostDatastoreMap;
     }else if(deviceType=="nics"){
-       optionsMap = this.hostNetworkMap;
+       optionsMap = pipeline.hostNetworkMap;
     }
     return optionsMap[devIndex]
 }
