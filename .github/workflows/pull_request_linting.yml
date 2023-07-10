@@ -1,0 +1,22 @@
+name: Pull Request Lint
+
+on:
+  pull_request:
+    types: ['opened', 'edited', 'reopened', 'synchronize']
+
+jobs:
+  title:
+    name: ticket check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for ticket
+        uses: neofinancial/ticket-check-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ticketLink: 'https://:org.atlassian.net/browse/PROJ-%ticketNumber%'
+          ticketPrefix: 'PROJ-'
+          titleRegex: '^PROJ-(?<ticketNumber>\d+)'
+          branchRegex: '^PROJ-(?<ticketNumber>\d+)'
+          bodyRegex: 'PROJ-(?<ticketNumber>\d+)'
+          bodyURLRegex: 'http(s?):\/\/(:org.atlassian.net)(\/browse)\/(PROJ\-)(?<ticketNumber>\d+)'
